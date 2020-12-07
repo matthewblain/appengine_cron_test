@@ -14,9 +14,12 @@ Request specified in Cron configuration or Task Queue enqueue call is executed.
 
 Calling system reports failure. No logs appear, not even for failures, in log records.
 
-## A simple app which reproduces the issue.
+**Note:**
+The task queue system, and cron which is built on top of it, are by very definition 'internal' and should not be blocked by this ingress setting.
 
-This is a very very simple app which has a no-op cron/push queue responder and a way to enqueue tasks.
+## A concrete app with repro steps.
+
+The files in the 'app' directory comprise a simple app which has a no-op cron/push queue responder and a way to enqueue tasks.
 
 Repro can thus be done as follows:
 
@@ -42,7 +45,7 @@ The log entry will contain all the environment variables, including the followin
 'HTTP_X_APPENGINE_QUEUENAME': '__cron',
 ```
 
-### Verify Task QUeue
+### Verify Task Queue
 
 Run `curl -d v=${target version} https://${target url}/enqueue/` .
 
@@ -94,8 +97,6 @@ Visit https://console.cloud.google.com/cloudtasks and click 'run now'
 
 It should succeed (disapear) and appear in the logs.
 
-### Note
-
-The task queue system, and cron which is built on top of it, are by very definition 'internal' and should not be blocked by this ingress setting.
+### Additional comment
 
 The 'ingress' configuration does not appear to be visible in the Cloud Console, which may makes this bug harder to analyze and debug.
