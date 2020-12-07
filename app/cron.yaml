@@ -1,0 +1,4 @@
+cron:
+- description: "test every 5 minutes"
+  url: /crontest
+  schedule: 2nd wednesday of march 17:00
